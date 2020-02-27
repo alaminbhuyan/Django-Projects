@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        h1{
+            color: blue;
+        }
+        h1 span{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    {% extends 'index2.htm' %}
+
+    {% block content %}
+    <h1>Hello Alamin. I am talking in <span>{{ content }}</span> page</h1>
+    <a href="profile">Go profile page</a><br><br>
+    <form action="details" method="POST">
+        {% csrf_token %}
+        First value: <input type="text" name="text1"><br><br>
+        Second value: <input type="text" name="text2"><br><br>
+        <input type="submit">
+    </form><br><br>
+    <h1>The sum is = {{result}}</h1>
+    <br>
+    {% if user.is_authenticated %}
+    <a href="a5/logout">LogOut</a>
+    {% else %}
+    <a href="a3/signup">Signup</a>
+    <br>
+    <a href="a4/login">LogIn</a>
+    {% endif %}
+    <br>
+    
+    {% endblock %}
+</body>
+</html>
