@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+<!--<h1>Hello alamin this your Home page.</h1>-->
+<!--Your name is {{name}} and your location is {{location}}-->
+<h2>Write your comment in the text area below:</h2>
+<form action="/analyze" method="get">
+<!--    {% csrf_token %}-->
+    <textarea name="text" style="margin: 0px; width: 1003px; height: 178px;"></textarea><br>
+    <input type="checkbox" name="removepunc">Remove Punctations<br>
+    <button type="submit">TextAnalyzer</button>
+</form>
+</body>
+</html>
