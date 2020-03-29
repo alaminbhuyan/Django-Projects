@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+Contact Page
+{% endblock title %}
+
+{% block body %}
+<div class="container my-3">
+    <h2 class="text-success">Contact With Blog Admin: </h2>
+    <form method="POST" action="/contact" style="max-width: 700px;">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="phone" class="form-control" id="phone" name="phone" placeholder="Your Phone" required>
+        </div>
+        <div class="form-group">
+            <label for="content">Describe Your Issue: </label>
+            <textarea type="text" class="form-control" id="content" name="content" rows="5" placeholder="Enter your Text" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+{% endblock body %}
