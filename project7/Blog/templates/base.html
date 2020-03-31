@@ -22,7 +22,7 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item {% block homeblock %}{% endblock %}">
@@ -41,34 +41,143 @@
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <form method="get" action="/search" class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" name="query" id="query" placeholder="Search"
+                    aria-label="Search">
+                <button class="btn btn-outline-success my-2 mr-2 my-sm-0" type="submit">Search</button>
             </form>
+
+            {% if user.is_authenticated %}
+
+            <!--logout Button  -->
+            <a href="/logout" role="button" type="submit" class="btn btn-outline-success">
+                LogOut
+            </a>
+            {% else %}
+            <!--LogIn Button trigger modal -->
+            <button type="submit" class="btn btn-outline-success mx-2" data-toggle="modal" data-target="#loginmodel">
+                LogIn
+            </button>
+            <!--singup Button trigger modal -->
+            <button type="submit" class="btn btn-outline-success" data-toggle="modal" data-target="#singupmodel">
+                SingUp
+            </button>
+            {% endif %}
         </div>
     </nav>
+
+    <!-- Modal of SingUP -->
+    <div class="modal fade" id="singupmodel" tabindex="-1" role="dialog" aria-labelledby="singupModalLabel"
+        aria-hidden="true">
+        {% csrf_token %}
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="singupmodelLabel">Singup Here</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- form start here -->
+                    <form method="POST" action="/singup">{% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                aria-describedby="usernameHelp" placeholder="Username" required>
+                            <small id="UserNameHelp"class="form-text text-muted">We'll never share your
+                                username with anyone
+                                else.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="fname">First Name</label>
+                            <input type="text" name="fname" class="form-control" id="fname" placeholder="First Name"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">Last Name</label>
+                            <input type="text" name="lname" class="form-control" id="lname" placeholder="Last Name"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Email"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass1">Password</label>
+                            <input type="password" name="pass1" class="form-control" id="pass1"
+                                placeholder="Enter a password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass2">Confirm Password</label>
+                            <input type="password" name="pass2" class="form-control" id="pass2"
+                                placeholder="Enter confirm password" required>
+                        </div>
+                        <button type="submit" class="btn btn-outline-danger">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal of login -->
+    <div class="modal fade" id="loginmodel" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+        aria-hidden="true">
+        {% csrf_token %}
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginmodelLabel">LogIn Here</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- form start here -->
+                    <form method="POST" action="/login">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                aria-describedby="usernameHelp" placeholder="Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginpass">Password</label>
+                            <input type="password" name="password" class="form-control" id="loginpass"
+                                placeholder="Enter a password" required>
+                        </div>
+                        <button type="submit" class="btn btn-outline-danger">Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Code of message -->
     {% for message in messages  %}
-      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-          <strong>Message: </strong> {{ message }}.
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-          </button>
-      </div>
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>Message: </strong> {{ message }}.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     {% endfor %}
-{% block body %}
-  
-{% endblock body %}
+    {% block body %}
+
+    {% endblock body %}
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-    </script>
+        </script>
 </body>
 
 </html>

@@ -5,5 +5,11 @@ Block Post
 {% endblock title %}
 
 {% block body %}
-This is blog Post
+<div class="container mt-3">
+    <h2 class="blog-post-title">{{post.title}}</h2>
+    <p class="blog-post-meta">{{post.time}} by <a href="#">{{post.author}}</a></p>
+
+    <p>{{post.content}}</p>
+    <hr>
+</div>
 {% endblock body %}
